@@ -15,10 +15,14 @@ def get_birthdays_per_week(users):
         birthday = user["birthday"]
         birthday = birthday.replace(year=today.year)
         if birthday < today:
-            birthday = birthday.replace(year=today.year + 1)  # Перевіряємо, чи дата народження потрапляє в наступний тиждень
+            birthday = birthday.replace(year=today.year + 1)  
+        if not today <= birthday <= today + timedelta(days=7):
+            continue
         if today <= birthday <= today + timedelta(days=7):
             day_week = birthday.weekday()
-            if day_week == 0 or day_week == 5 or day_week == 6:
+            if day_week == 5 or day_week == 6:
+                weekdays["Monday"].append(name)
+            elif day_week == 0:
                 weekdays["Monday"].append(name)
             elif day_week == 1:
                 weekdays["Tuesday"].append(name)
@@ -27,17 +31,12 @@ def get_birthdays_per_week(users):
             elif day_week == 3:
                 weekdays["Thursday"].append(name)
             elif day_week == 4:
-                weekdays["Friday"].append(name)              
+                weekdays["Friday"].append(name)        
         else:
             return {}
-            
 
-
-
-
-        result = {key: value for key, value in weekdays.items() if value}
-    print(result) 
-    return result
+        users = {key: value for key, value in weekdays.items() if value}
+    return users
       
     # return weekdays     
 
