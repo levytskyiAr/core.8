@@ -41,7 +41,6 @@ def get_birthdays_per_week(users):
         else:
             return {}
     users = {key: value for key, value in weekdays.items() if value}
-    print(users)
     return users
   
 
