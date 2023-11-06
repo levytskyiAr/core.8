@@ -3,6 +3,7 @@ def get_birthdays_per_week(users):
     if not users:
         return {}
     today = date.today()
+
     weekdays = {
         "Monday": [],
         "Tuesday": [],
@@ -10,14 +11,17 @@ def get_birthdays_per_week(users):
         "Thursday": [],
         "Friday": []
     }
+ 
     for user in users:
         name = user["name"]
         birthday = user["birthday"]
         birthday = birthday.replace(year=today.year)
         if birthday < today:
-            birthday = birthday.replace(year=today.year + 1)  
+            birthday = birthday.replace(year=today.year + 1)
+
         if not today <= birthday <= today + timedelta(days=7):
             continue
+
         if today <= birthday <= today + timedelta(days=7):
             day_week = birthday.weekday()
             if day_week == 5 or day_week == 6:
@@ -31,15 +35,15 @@ def get_birthdays_per_week(users):
             elif day_week == 3:
                 weekdays["Thursday"].append(name)
             elif day_week == 4:
-                weekdays["Friday"].append(name)        
+                weekdays["Friday"].append(name)
+            else:
+                return {}
         else:
             return {}
-
-        users = {key: value for key, value in weekdays.items() if value}
+    users = {key: value for key, value in weekdays.items() if value}
+    print(users)
     return users
-      
-    # return weekdays     
-
+  
 
 if __name__ == "__main__":
     users = [
